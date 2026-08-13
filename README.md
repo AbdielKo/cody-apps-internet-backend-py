@@ -1,41 +1,81 @@
-# API Starter Template - Taller Internet
+# 🚀 FastAPI Enterprise Template - Taller de Aplicaciones de Internet
 
-Un template robusto que incluye **SQLModel**, **Autenticación con JWT** y el **Patrón Repositorio / Service** construido nativamente encima de FastAPI.
+<div align="center">
+  <i>Repositorio Base Oficial para el Módulo de Backend (Python & FastAPI).</i><br>
+  <b><a href="https://cody-apps-internet.vercel.app/" target="_blank">🌐 Ver el Curso y Materiales de Estudio Completos</a></b>
+</div>
 
-## Pasos para Levantar (Desarrollo Local)
+---
 
-Estos pasos asumen que tienes Python instalado (preferiblemente mediante `pyenv` o nativo versión `3.10+`) y estás usando la línea de comandos de Linux/WSL.
+## 📖 Acerca de este Proyecto
+
+Este repositorio es una plantilla fundacional (Boilerplate) diseñada con rigor arquitectónico. Implementa los principios de **Clean Architecture** (Arquitectura de Capas: `Routers -> Services -> Models`), **Inyección de Dependencias** y **Seguridad Robusta**, construida nativamente encima de [FastAPI](https://fastapi.tiangolo.com/).
+
+### Tecnologías Principales:
+* **Framework:** FastAPI
+* **ORM & Validación:** SQLModel + Pydantic
+* **Seguridad:** JWT (JSON Web Tokens) + Hashing de Contraseñas (Passlib/Bcrypt)
+* **Base de Datos:** SQLite (Configurado por defecto, listo para migrar a PostgreSQL)
+
+---
+
+## ⚙️ Guía de Arranque Rápido (Desarrollo Local)
+
+Sigue estos pasos cuidadosamente para levantar la API en tu entorno local. 
+> ⚠️ **Requisito Mínimo:** Asegúrate de tener instalado **Python 3.9 o superior**.
 
 ### 1. Entorno Virtual y Dependencias
-Evita la polución de paquetes en tu sistema creando un "Cuarto Limpio":
+
+Aísla las dependencias del proyecto creando un entorno virtual ("Cuarto Limpio") para evitar conflictos en tu sistema:
 
 ```bash
-# Crear el entorno (solo se hace la primera vez)
+# 1. Crear el entorno virtual (solo la primera vez)
 python3 -m venv venv
 
-# Activar el entorno (hacerlo CADA VEZ que abras una terminal nueva)
-source venv/bin/activate
+# 2. Activar el entorno virtual (haz esto SIEMPRE que abras una nueva terminal)
+source venv/bin/activate  # En Linux/macOS/WSL
 
-# Instalar los paquetes del proyecto
+# 3. Instalar dependencias estrictas
 pip install -r requirements.txt
 ```
 
-### 2. Configurar Entorno Seguro
-El proyecto nunca debe subir sus claves a Git. Crearemos el archivo local para ti mismo:
-Copia el archivo `.env.example` y renómbralo a `.env`.
+### 2. Configurar Variables de Entorno y Seguridad
+
+Por seguridad, las claves maestras y configuraciones jamás se suben al código fuente. 
 
 ```bash
+# 1. Copiar la plantilla de configuración
 cp .env.example .env
 ```
 
-### 3. Encender el Servidor
-Dado que usamos SQLite internamente, no necesitas instalar PostgreSQL en tu PC. La base de datos se creará automática (fichero `.db`) en el primer arranque.
+**Generación de Clave Criptográfica:**
+Abre el archivo `.env` recién creado. Necesitas reemplazar el valor de `SECRET_KEY`. **Nunca uses una contraseña fácil (ej. 123456).** Genera un hash criptográfico de 32 bytes ejecutando este comando en tu terminal, y pega el resultado en tu archivo `.env`:
 
 ```bash
-uvicorn main:app --reload
+openssl rand -hex 32
 ```
 
-## Exploración Automática (Docs)
-Al encender, revisa tus rutas y prueba tu JWT (botón "Authorize" verde) abriendo en tu navegador local la URL mágica de FastAPI:
+### 3. Encender el Servidor
 
-👉 <a href=\"http://localhost:8000/docs\" target=\"_blank\">http://localhost:8000/docs</a>
+Gracias a SQLModel y SQLite, la base de datos se autoconstruirá (archivo `taller_db.db`) en el primer encendido. Para levantar el servidor en modo desarrollo (recarga automática):
+
+```bash
+# Enciende Uvicorn apuntando al archivo main.py dentro de la carpeta app
+uvicorn app.main:app --reload
+```
+
+---
+
+## 🧪 Exploración y Pruebas (Swagger UI)
+
+Una vez que el servidor indique que ha arrancado exitosamente, FastAPI autogenerará una documentación interactiva completa con OpenAPI.
+
+Abre tu navegador y visita:
+👉 **[http://localhost:8000/docs](http://localhost:8000/docs)**
+
+Desde esta interfaz podrás:
+1. Registrar un nuevo usuario.
+2. Autenticarte (usando el candado verde "Authorize") para inyectar tu JWT.
+3. Probar los endpoints CRUD base que vienen pre-construidos en este repositorio.
+
+¡Feliz codificación! 🧑‍💻👩‍💻

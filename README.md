@@ -1,4 +1,4 @@
-# 🚀 FastAPI Enterprise Template - Taller de Aplicaciones de Internet
+# 🚀 FastAPI Template - Taller de Aplicaciones de Internet
 
 <div align="center">
   <i>Repositorio Base Oficial para el Módulo de Backend (Python & FastAPI).</i><br>

@@ -18,6 +18,14 @@ def leer_tareas(session: SessionDep, current_user: CurrentUser, skip: int = 0, l
 def crear_tarea(session: SessionDep, current_user: CurrentUser, task_in: TaskCreate) -> Any:
     return task_service.create_task(session=session, task_in=task_in)
 
+@router.post("/ai", response_model=TaskPublic)
+def crear_tarea_con_ia(session: SessionDep, current_user: CurrentUser, task_in: TaskCreate) -> Any:
+    """
+    Crea una tarea e inyecta un consejo mágico de productividad usando Google Gemini AI.
+    Requiere que la variable GEMINI_API_KEY esté configurada.
+    """
+    return task_service.create_task_ai(session=session, task_in=task_in)
+
 @router.patch("/{task_id}", response_model=TaskPublic)
 def actualizar_tarea(session: SessionDep, current_user: CurrentUser, task_id: int, task_in: TaskUpdate) -> Any:
     task_db = task_service.update_task(session=session, task_id=task_id, task_in=task_in)

@@ -9,10 +9,12 @@ class TaskBase(SQLModel):
 # Modelo principal para la Base de Datos
 class Task(TaskBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
+    ai_suggestion: Optional[str] = Field(default=None)
     
 # Schema Público para Lectura
 class TaskPublic(TaskBase):
     id: int
+    ai_suggestion: Optional[str] = None
 
 # Schema para Crear
 class TaskCreate(TaskBase):

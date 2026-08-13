@@ -60,8 +60,8 @@ openssl rand -hex 32
 Gracias a SQLModel y SQLite, la base de datos se autoconstruirá (archivo `taller_db.db`) en el primer encendido. Para levantar el servidor en modo desarrollo (recarga automática):
 
 ```bash
-# Enciende Uvicorn apuntando al archivo main.py dentro de la carpeta app
-uvicorn app.main:app --reload
+# Enciende Uvicorn apuntando al archivo main.py (en la raíz)
+uvicorn main:app --reload
 ```
 
 ---

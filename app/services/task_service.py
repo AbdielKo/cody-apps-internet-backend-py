@@ -1,5 +1,7 @@
 from sqlmodel import Session, select
 from app.models.task import Task, TaskCreate, TaskUpdate
+from app.core.config import settings
+from google import genai
 
 # La Capa de Servicios se encarga EXCLUSIVAMENTE de la lógica.
 # Jamás sabe qué es una "Request" o "FastAPI". Separación absoluta.
@@ -13,6 +15,30 @@ def get_task_by_id(session: Session, task_id: int) -> Task | None:
 
 def create_task(session: Session, task_in: TaskCreate) -> Task:
     task_db = Task.model_validate(task_in)
+    session.add(task_db)
+    session.commit()
+    session.refresh(task_db)
+    return task_db
+
+def create_task_ai(session: Session, task_in: TaskCreate) -> Task:
+    task_db = Task.model_validate(task_in)
+    
+    # --- 🤖 EFECTO WOW: SUGERENCIA DE INTELIGENCIA ARTIFICIAL ---
+    if settings.GEMINI_API_KEY:
+        try:
+            client = genai.Client(api_key=settings.GEMINI_API_KEY)
+            prompt = f"Eres un asistente proactivo de productividad. El usuario tiene esta tarea: '{task_db.title}'. Descripción: '{task_db.description or 'Sin descripción'}'. En un máximo de 2 oraciones cortas, dale un consejo útil, local o motivador para esta tarea."
+            
+            response = client.models.generate_content(
+                model='gemini-flash-latest',
+                contents=prompt
+            )
+            task_db.ai_suggestion = response.text.strip()
+        except Exception as e:
+            print(f"Error generando sugerencia IA: {e}")
+            pass
+    # ------------------------------------------------------------
+    
     session.add(task_db)
     session.commit()
     session.refresh(task_db)

@@ -23,13 +23,15 @@ app = FastAPI(
 )
 
 # Configuración Anti-CORS (Muy pedido en la clase teórica del Día 4)
+# Configuración CORS para desarrollo local
+# Permite Angular ejecutándose en cualquier puerto de localhost
 app.add_middleware(
     CORSMiddleware,
-    # Durante desarrollo acepta de cualquier Frontend Angular local
-    allow_origins=["http://localhost:4200", "http://localhost:8080"], 
+    allow_origin_regex=r"^http://(localhost|127\.0\.0\.1):\d+$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+
 )
 
 # Endpoint Salud inicial

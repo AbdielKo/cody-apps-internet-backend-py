@@ -27,7 +27,7 @@ app = FastAPI(
 # Permite Angular ejecutándose en cualquier puerto de localhost
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"^http://(localhost|127\.0\.0\.1):\d+$","https://cody-apps-internet-backend-py-enh1.onrender.com",
+    allow_origin_regex=r"^http://(localhost|127\.0\.0\.1):\d+$","https://cody-apps-internet-frontend-ng.vercel.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
